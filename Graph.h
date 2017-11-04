@@ -11,8 +11,8 @@ using namespace std;
 // Struct representing an edge in the graph.
 struct Edge
 {
-	string u; // Name of the city in index "i" of the graph.
-	string v; // Name of the city that is adjacent to city "i."
+	string u; // Starting city.
+	string v; // Ending city.
 	int weight; // Distance between the cities.
 };
 
@@ -24,6 +24,7 @@ struct Vertex
 	vector<Edge> edgeList; // List of incident edges.
 };
 
+// Graph class that uses an adjacency list
 class Graph
 {
 public:
