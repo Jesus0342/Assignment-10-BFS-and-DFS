@@ -33,6 +33,7 @@ int main()
 	// Returns a list of the cities and edges of the graph.
 	vector<string> cities = graph.vertices();
 	vector<string> edgeList = graph.edges();
+	vector<string> dfs;
 
 	// Prints a list of the cities.
 	for(unsigned int i = 0; i < cities.size(); i++)
@@ -47,6 +48,8 @@ int main()
 	{
 		cout << edgeList.at(i) << endl;
 	}
+
+	graph.DFS("Dallas", dfs);
 
 	return 0;
 }

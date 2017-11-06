@@ -13,6 +13,8 @@ struct Edge
 {
 	string u; // Starting city.
 	string v; // Ending city.
+	bool discoveryEdge;
+	bool backEdge;
 	int weight; // Distance between the cities.
 };
 
@@ -38,8 +40,12 @@ public:
 	void insertEdge(string u, string v, int weight);
 	vector<string> vertices();
 	vector<string> edges();
+	int DFS(string startingCity, vector<string> &bfs);
 
 private:
+	int smallestEdge(int vertexIndex);
+	int allVisited();
+
 	vector<Vertex> graph;
 };
 

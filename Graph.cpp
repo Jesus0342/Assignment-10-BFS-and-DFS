@@ -136,3 +136,74 @@ vector<string> Graph::edges()
 
 	return edgeList;
 }
+
+int Graph::DFS(string startingCity, vector<string> &bfs)
+{
+	int distanceTraveled;
+
+	unsigned int vertex = findVertex(startingCity);
+
+	if(vertex < graph.size())
+	{
+		graph.at(vertex).visited = true;
+
+		cout << "\n\nStarting BFS at " << graph.at(vertex).city << " " << endl << endl;
+
+		int nextVertex = smallestEdge(vertex);
+
+		cout << graph.at(vertex).edgeList.at(nextVertex).v << " is the closest city to " << graph.at(vertex).city << endl << endl;
+	}
+	else
+	{
+		cout << "invalid city.";
+	}
+
+	return distanceTraveled;
+}
+
+int Graph::smallestEdge(int vertexIndex)
+{
+	int smallestEdgeIndex = 0;
+	int compIndex = 0;
+
+	for(unsigned int i = 0; i < graph.at(vertexIndex).edgeList.size(); i++)
+	{
+		if(graph.at(vertexIndex).edgeList.at(smallestEdgeIndex).weight >
+		   graph.at(vertexIndex).edgeList.at(compIndex).weight)
+		{
+			if(graph.at(compIndex).visited == false)
+			{
+				cout << graph.at(vertexIndex).edgeList.at(compIndex).v << " has been visited\n\n";
+
+				smallestEdgeIndex = compIndex;
+			}
+		}
+
+		cout << "Closest city is " << graph.at(vertexIndex).edgeList.at(smallestEdgeIndex).v << endl << endl;
+
+		compIndex++;
+	}
+
+	graph.at(smallestEdgeIndex).visited = true;
+
+	return smallestEdgeIndex;
+}
+
+int Graph::allVisited()
+{
+	int numVisited = 0;
+
+	vector<Vertex>::iterator graphIt = graph.begin();
+
+	while(graphIt != graph.end())
+	{
+		if(graphIt->visited)
+		{
+			numVisited++;
+		}
+
+		graphIt++;
+	}
+
+	return numVisited;
+}
