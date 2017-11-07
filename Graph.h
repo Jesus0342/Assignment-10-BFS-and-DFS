@@ -40,11 +40,12 @@ public:
 	void insertEdge(string u, string v, int weight);
 	vector<string> vertices();
 	vector<string> edges();
-	int DFS(string startingCity, vector<string> &bfs);
+	int DFS(string startingCity, vector<string> &dfs);
 
 private:
-	int smallestEdge(int vertexIndex);
-	int allVisited();
+	int smallestEdge(int currentVertex, vector<string> &dfs);
+	unsigned int allVisited();
+	unsigned int allEdgesVisited(int currentVertex);
 
 	vector<Vertex> graph;
 };
