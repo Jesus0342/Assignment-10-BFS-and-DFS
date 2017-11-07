@@ -24,6 +24,12 @@ struct Vertex
 	string city; // Name of the city in the vertex.
 	bool visited; // Whether or not the vertex has already been visited.
 	vector<Edge> edgeList; // List of incident edges.
+
+	Vertex()
+	{
+		city = "";
+		visited = false;
+	}
 };
 
 // Graph class that uses an adjacency list
@@ -43,9 +49,9 @@ public:
 	int DFS(string startingCity, vector<string> &dfs);
 
 private:
-	int smallestEdge(int currentVertex, vector<string> &dfs);
+	int smallestEdge(int currVertex, vector<string> &dfs);
 	unsigned int allVisited();
-	unsigned int allEdgesVisited(int currentVertex);
+	unsigned int allEdgesVisited(int currVertex);
 
 	vector<Vertex> graph;
 };

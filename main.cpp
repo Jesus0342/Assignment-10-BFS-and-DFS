@@ -51,13 +51,12 @@ int main()
 
 	graph.DFS("Dallas", dfs);
 
+	cout << endl;
 
-//	cout << endl;
-//
-//	for(unsigned int i = 0; i < dfs.size(); i++)
-//	{
-//		cout << dfs.at(i) << endl;
-//	}
+	for(unsigned int i = 0; i < dfs.size(); i++)
+	{
+		cout << dfs.at(i) << endl;
+	}
 
 	return 0;
 }
