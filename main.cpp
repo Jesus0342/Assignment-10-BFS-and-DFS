@@ -29,6 +29,17 @@
  *****************************************************************************/
 int main()
 {
+	cout << "***************************************************************\n"
+		 << "* NAME           : Jesus Sanchez & Jason Zhang\n"
+		 << "* ASSIGNMENT #10 : DFS & BFS\n"
+		 << "* CLASS          : CS1D - MW: 3:00pm\n"
+		 << "* DUE DATE       : 11/13/2017\n*\n"
+		 << "* DESCRIPTION: This program will demonstrate a DFS and BFS using\n"
+		 << "* a user-defined Graph class. After each traversal, the order\n"
+		 <<	"* that the vertices were visited in will be displayed, as well\n"
+		 << "* as the discovery edges and back/cross edges.\n"
+		 <<	"***************************************************************\n\n";
+
 	Graph graph; // Graph object.
 
 	cout << "Adding vertices to the graph...\n";
