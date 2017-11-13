@@ -1,0 +1,77 @@
+***************************************************************
+* NAME           : Jesus Sanchez & Jason Zhang
+* ASSIGNMENT #10 : DFS & BFS
+* CLASS          : CS1D - MW: 3:00pm
+* DUE DATE       : 11/13/2017
+*
+* DESCRIPTION: This program will demonstrate a DFS and BFS using
+* a user-defined Graph class. After each traversal, the order
+* that the vertices were visited in will be displayed, as well
+* as the discovery edges and back/cross edges.
+***************************************************************
+
+Adding vertices to the graph...
+Seattle
+San Francisco
+Los Angeles
+Dallas
+Houston
+Miami
+Atlanta
+New York
+Boston
+Chicago
+Denver
+Kansas City
+
+**********
+* PART A *
+**********
+
+Performing a DFS starting at Dallas:
+Dallas
+Houston
+Atlanta
+Miami
+Kansas City
+Chicago
+New York
+Boston
+Denver
+Los Angeles
+San Francisco
+Seattle
+
+Total Distance Traveled: 7314
+
+Printing DFS discovery edges:
+(Dallas, Houston)
+(Houston, Atlanta)
+(Atlanta, Miami)
+(Atlanta, Kansas City)
+(Kansas City, Chicago)
+(Chicago, New York)
+(Chicago, Denver)
+(New York, Boston)
+(Denver, Los Angeles)
+(Los Angeles, San Francisco)
+(San Francisco, Seattle)
+
+Printing DFS back edges:
+(Dallas, Los Angeles)
+(Dallas, Kansas City)
+(Dallas, Atlanta)
+(Houston, Miami)
+(Atlanta, New York)
+(Kansas City, Denver)
+(Kansas City, Los Angeles)
+(Kansas City, New York)
+(Chicago, Boston)
+(Chicago, Seattle)
+(Denver, Seattle)
+(Denver, San Francisco)
+
+**********
+* PART B *
+**********
+
