@@ -88,5 +88,31 @@ int main()
 			"* PART B *\n"
 			"**********\n\n";
 
+	vector<string> bfs;
+
+    	cout << "Performing a BFS starting at Dallas: \n";
+    	int bfsDistance = graph.BFS("Dallas",bfs);
+
+    	for(unsigned int i = 0; i < bfs.size(); i++)
+    	{
+    	    cout << bfs.at(i) << endl;
+    	}
+
+   	 cout << "\nTotal Distance Traveled: " << bfsDistance << endl;
+
+    	cout << "\nPrinting BFS discovery edges: \n";
+    	vector<string> bfsDiscoveryEdges = graph.getDiscoveryEdges(bfs);
+    	for(unsigned int i = 0; i < bfsDiscoveryEdges.size(); i++)
+    	{
+    	    cout << bfsDiscoveryEdges.at(i) << endl;
+    	}
+
+    	cout << "\nPrinting BFS cross edges: \n";
+    	vector<string> bfsCrossEdges = graph.getBackEdges(bfs);
+    	for(unsigned int i = 0; i < bfsCrossEdges.size(); i++)
+    	{
+    	    cout << bfsCrossEdges.at(i) << endl;
+    	}
+	
 	return 0;
 }
