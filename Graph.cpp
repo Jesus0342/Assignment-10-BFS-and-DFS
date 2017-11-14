@@ -67,6 +67,7 @@ unsigned int Graph::findVertex(string city)
 
 	return index;
 }
+
 void Graph::insertVertex(string city)
 {
 	// Adds the vertex to the graph if it does not yet exist.
@@ -172,7 +173,7 @@ int Graph::DFS(string startingCity, vector<string> &dfs)
 	return dfsDistance;
 }
 
-vector<string> Graph::DFSDiscoveryEdges(vector<string> &dfs)
+vector<string> Graph::getDiscoveryEdges(vector<string> &dfs)
 {
 	vector<Edge> discEdges; // Vector of the discovery edges.
 
@@ -210,7 +211,7 @@ vector<string> Graph::DFSDiscoveryEdges(vector<string> &dfs)
 	return discoveryEdges;
 }
 
-vector<string> Graph::DFSBackEdges(vector<string> &dfs)
+vector<string> Graph::getBackEdges(vector<string> &dfs)
 {
 	vector<Edge> backEdges; // Vector of back edges.
 
@@ -225,6 +226,7 @@ vector<string> Graph::DFSBackEdges(vector<string> &dfs)
 			if(!(graph.at(dfsIndex).edgeList.at(j).discoveryEdge))
 			{
 				backEdges.push_back(graph.at(dfsIndex).edgeList.at(j));
+				//cout << "Added edge (" << graph.at(dfsIndex).edgeList.at(j).u << ", " << graph.at(dfsIndex).edgeList.at(j).v << ")\n";
 			}
 		}
 	}
@@ -341,6 +343,118 @@ int Graph::smallestEdgeDFS(int currVertex, vector<string> &dfs)
 		// any unvisited edges to continue the DFS.
 		return smallestEdgeDFS(backIndex, dfs);
 	}
+}
+
+int Graph::BFS(string startingCity, vector<string> &bfs)
+{
+    // Reset the graph, this should be its own function
+    for (unsigned int i=0; i<graph.size(); i++) {
+        graph.at(i).visited = false;
+        for (unsigned int j=0; j< graph.at(i).edgeList.size(); j++)
+            graph.at(i).edgeList.at(j).discoveryEdge = false;
+    }
+
+    // Get the graph index of the vertex being visited.
+	int currVertex = findVertex(startingCity);
+
+	// Visit the starting vertex
+	graph.at(currVertex).visited = true;
+
+	// Create a newLevel vector to hold the current level, containing only
+	// the 1st vertex, and add the first vertex to the bfs vector
+	vector<int> newLevel;
+	newLevel.push_back(currVertex);
+	bfs.push_back(startingCity);
+
+	// Start recursion
+	return BFSRecur(bfs, newLevel);
+}
+
+int Graph::BFSRecur(vector<string> &bfs, vector<int> previousLevel)
+{
+    vector<int> newLevel;
+    vector<int> currLevel;
+    int levelDistance = 0;
+
+    vector<Edge> * currEdgeList;
+    Vertex * startingVertex;
+    Vertex * currVertex;
+    int currVertexID;
+
+    // Iterate through the previous level
+    for (unsigned int i=0; i<previousLevel.size(); i++) {
+        startingVertex = &graph.at(previousLevel.at(i));
+        currEdgeList = &startingVertex->edgeList;
+
+        // Iterate through the ith vertex's edge list
+        for (unsigned int j=0; j<currEdgeList->size(); j++)
+        {
+            // Add all non-visited levels to the next level, in closest order
+            currVertexID = findVertex(otherVertex(currEdgeList->at(j),startingVertex->city));
+            currVertex = &graph.at(currVertexID);
+            if (!currVertex->visited)
+            {
+                // Add the edge length to the distance, including return trip
+                levelDistance += currEdgeList->at(j).weight;
+
+                // Mark the vertex as visited and the edge as a discovery edge
+                currVertex->visited = true;
+                currEdgeList->at(j).discoveryEdge = true;
+
+                // Also mark the reverse edge as a discovery edge
+                for(unsigned int i = 0; i < currVertex->edgeList.size(); i++)
+                {
+                    if(currVertex->edgeList.at(i).v == startingVertex->city)
+                        currVertex->edgeList.at(i).discoveryEdge = true;
+                }
+
+                // Insert the current vertex in the sorted position
+                bool inserted = false; // could do the same thing by changing the visited variable, but this is clearer
+                for (unsigned int k=0; k<currLevel.size() && !inserted; k++)
+                {
+                    if (currEdgeList->at(j).weight < distance(startingVertex, &graph.at(currLevel.at(k))))
+                    {
+                        currLevel.insert(currLevel.begin()+k,currVertexID);
+                        inserted = true;
+                    }
+                }
+                if (!inserted)
+                    currLevel.push_back(findVertex(currVertex->city));
+            }
+        }
+        // Add the current level vertices to the the end of the bfs vector
+        for (unsigned int m=0; m<currLevel.size(); m++) {
+            bfs.push_back(graph.at(currLevel.at(m)).city);
+        }
+
+        // Add the current level vertices to the end of the newLevel vector
+        newLevel.insert(newLevel.end(),currLevel.begin(),currLevel.end());
+        currLevel.clear();
+    }
+
+    // If still has vertices, do recursive call
+    if (newLevel.size() > 0)
+        return levelDistance + BFSRecur(bfs, newLevel);
+    else
+        return levelDistance;
+}
+
+int Graph::distance(Vertex * v1, Vertex * v2)
+{
+    // find connecting edge
+    for (unsigned int i=0; i<v1->edgeList.size(); i++) {
+        if (v1->edgeList.at(i).u == v2->city || v1->edgeList.at(i).v == v2->city)
+            return v1->edgeList.at(i).weight;
+    }
+    return -1;
+}
+
+string Graph::otherVertex(Edge currEdge, string startingCity)
+{
+    if(currEdge.u == startingCity)
+        return currEdge.v;
+    else
+        return currEdge.u;
 }
 
 unsigned int Graph::verticesVisited()
